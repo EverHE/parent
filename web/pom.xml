@@ -75,6 +75,11 @@
 			<artifactId>fastjson</artifactId>
 			<version>1.2.35</version>
 		</dependency>
+		<!--thymeleaf模版引擎-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -82,13 +87,11 @@
 			<resource>
 				<!-- 配置文件路径 -->
 				<directory>src/main/resources</directory>
-				<!-- 配置过滤文件 -->
 				<includes>
-					<!-- resources下除了properties结尾的文件，其他的不会编译打包到war包 -->
-					<include>*.yml</include>
+					<include>**/*</include>
 				</includes>
 				<!-- filtering,是否过滤文件 -->
-				<filtering>true</filtering>
+				<filtering>false</filtering>
 			</resource>
 		</resources>
 		<plugins>
