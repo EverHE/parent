@@ -3,13 +3,15 @@ package com.he.service.sys.imp;
 import com.he.dao.mapper.sys.UserMapper;
 import com.he.model.entity.User;
 import com.he.service.sys.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+/**
+ * @author HL
+ */
 @Service
-public class UserServiceImp implements IUserService {
+public class UserServiceImpl implements IUserService {
     @Resource
     UserMapper  userMapper;
 
