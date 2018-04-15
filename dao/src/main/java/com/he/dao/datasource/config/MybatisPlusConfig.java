@@ -1,4 +1,4 @@
-package com.he.dao.config;
+package com.he.dao.datasource.config;
 
 import com.baomidou.mybatisplus.incrementer.H2KeyGenerator;
 import com.baomidou.mybatisplus.incrementer.IKeyGenerator;
@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
 import com.baomidou.mybatisplus.plugins.parser.ISqlParser;
 import com.baomidou.mybatisplus.plugins.parser.tenant.TenantHandler;
 import com.baomidou.mybatisplus.plugins.parser.tenant.TenantSqlParser;
+import com.he.dao.datasource.handler.MyMetaObjectHandler;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
 import org.mybatis.spring.annotation.MapperScan;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@MapperScan("com.he.dao.mapper.sys*")
+@MapperScan({"com.he.dao.mapper.sys*","com.he.dao.mapper.biz*"})
 public class MybatisPlusConfig {
 
     /**
@@ -122,9 +123,9 @@ public class MybatisPlusConfig {
         return DataSourceBuilder.create().build();
     }
 
-    @Bean
-    @ConfigurationProperties("spring.datasource2" )
-    public DataSource dataSource2() {
-        return DataSourceBuilder.create().build();
-    }
+//    @Bean
+//    @ConfigurationProperties("spring.datasource2" )
+//    public DataSource dataSource2() {
+//        return DataSourceBuilder.create().build();
+//    }
 }

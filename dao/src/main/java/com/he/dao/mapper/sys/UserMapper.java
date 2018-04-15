@@ -2,7 +2,7 @@ package com.he.dao.mapper.sys;
 
 import com.baomidou.mybatisplus.annotations.SqlParser;
 import com.he.dao.mapper.SuperMapper;
-import com.he.model.entity.User;
+import com.he.model.entity.sys.User;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 

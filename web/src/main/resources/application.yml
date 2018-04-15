@@ -24,7 +24,7 @@ spring:
     #配置一个连接在池中最小生存的时间，单位是毫秒
     min-evictable-idle-time-millis: 300000
 
-    filters: log4j
+    filters: wall
     filter:
       stat:
         enabled: true
@@ -92,16 +92,18 @@ spring:
 
 #mybatis
 mybatis-plus:
-  mapper-locations: classpath*:/mapper/**Mapper.xml
+  datasource: datasource
+  #mapper-locations: classpath*:/mapper/**Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.tdx.account_service.entity
+  typeAliasesPackage: com.he.model.entity
+  typeEnumsPackage: com.he.model.enums
   global-config:
     #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
     id-type: 0
     #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
     field-strategy: 2
     #驼峰下划线转换
-    db-column-underline: true
+    #db-column-underline: true
     #刷新mapper 调试神器
     refresh-mapper: true
     #数据库大写下划线转换
@@ -117,7 +119,7 @@ mybatis-plus:
     #meta-object-handler: com.baomidou.springboot.xxx
   configuration:
     #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
-    map-underscore-to-camel-case: true
+    #map-underscore-to-camel-case: true
     cache-enabled: false
     #配置JdbcTypeForNull, oracle数据库必须配置
     jdbc-type-for-null: 'null'

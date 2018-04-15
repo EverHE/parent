@@ -1,4 +1,4 @@
-package com.he.model.enums;
+package com.he.dao.datasource.enums;
 
 /**
  * 数据库枚举

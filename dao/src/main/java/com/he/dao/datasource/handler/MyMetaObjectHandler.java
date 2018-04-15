@@ -1,4 +1,4 @@
-package com.he.dao.config;
+package com.he.dao.datasource.handler;
 
 import com.baomidou.mybatisplus.mapper.MetaObjectHandler;
 import com.he.dao.DaoApplication;
@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 //@Component
 public class MyMetaObjectHandler extends MetaObjectHandler {
 
-    protected final static Logger logger = LoggerFactory.getLogger(DaoApplication.class);
+    private final static Logger logger = LoggerFactory.getLogger(DaoApplication.class);
 
     @Override
     public void insertFill(MetaObject metaObject) {

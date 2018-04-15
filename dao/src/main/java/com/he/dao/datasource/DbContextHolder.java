@@ -1,6 +1,6 @@
 package com.he.dao.datasource;
 
-import com.he.model.enums.DBTypeEnum;
+import com.he.dao.datasource.enums.DBTypeEnum;
 
 /**
  * 用来设置或获取线程相关的数据源别名
@@ -10,7 +10,6 @@ public class DbContextHolder {
 
     /**
      * 设置数据源
-     *
      * @param dbTypeEnum
      */
     public static void setDbType(DBTypeEnum dbTypeEnum) {
@@ -19,7 +18,6 @@ public class DbContextHolder {
 
     /**
      * 取得当前数据源
-     *
      * @return
      */
     public static String getDbType() {

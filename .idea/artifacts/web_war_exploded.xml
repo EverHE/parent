@@ -63,11 +63,19 @@
           <element id="library" level="project" name="Maven: com.github.jsqlparser:jsqlparser:1.1" />
           <element id="library" level="project" name="Maven: com.baomidou:mybatis-plus-generate:2.1.9" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.7" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid-spring-boot-starter:1.1.9" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid:1.1.9" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.46" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-aop:2.0.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.8.13" />
           <element id="archive" name="model-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="model" />
           </element>
           <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.16.20" />
+          <element id="archive" name="common-0.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="common" />
+          </element>
+          <element id="library" level="project" name="Maven: cn.hutool:hutool-all:4.0.9" />
           <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.35" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-thymeleaf:2.0.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.thymeleaf:thymeleaf-spring5:3.0.9.RELEASE" />
