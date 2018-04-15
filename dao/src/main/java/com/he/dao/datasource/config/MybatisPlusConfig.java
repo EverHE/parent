@@ -25,8 +25,8 @@ import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
-@MapperScan({"com.he.dao.mapper.sys*","com.he.dao.mapper.biz*"})
+//@Configuration
+//@MapperScan({"com.he.dao.mapper.sys*","com.he.dao.mapper.biz*"})
 public class MybatisPlusConfig {
 
     /**

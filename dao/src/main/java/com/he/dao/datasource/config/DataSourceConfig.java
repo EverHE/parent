@@ -16,33 +16,33 @@ import java.util.Map;
 import java.util.HashMap;
 
 
-//@Configuration
-//@MapperScan(value = {"com.he.dao.mapper.sys*","com.he.dao.mapper.biz*"})
+@Configuration
+@MapperScan(value = {"com.he.dao.mapper.sys*","com.he.dao.mapper.biz*"})
 //@MapperScan(value = {"com.zhangshuo.test1.mapper", "com.zhangshuo.test2.mapper"})
 public class DataSourceConfig {
 
     @ConfigurationProperties("spring.datasource")
-    @Bean(name = "datasource1")
-    public DruidDataSource dataSource1() {
+    @Bean(name = "master")
+    public DruidDataSource master() {
         return new DruidDataSource();
     }
 
     @ConfigurationProperties("spring.datasource2")
-    @Bean(name = "datasource2")
-    public DruidDataSource dataSource2() {
+    @Bean(name = "slave")
+    public DruidDataSource slave() {
         return new DruidDataSource();
     }
 
     @Bean(name = "datasource")
     @Primary
-    public DynamicDataSource dynamicDataSource(@Qualifier(value = "datasource1") DataSource dataSource1,
-                                               @Qualifier(value = "datasource2") DataSource dataSource2) {
+    public DynamicDataSource dynamicDataSource(@Qualifier(value = "master") DataSource master,
+                                               @Qualifier(value = "slave") DataSource slave) {
         DynamicDataSource bean = new DynamicDataSource();
         Map<Object, Object> targetDataSources = new HashMap<>();
-        targetDataSources.put("datasource1", dataSource1);
-        targetDataSources.put("datasource2", dataSource2);
+        targetDataSources.put("MASTER", master);
+        targetDataSources.put("SLAVE", slave);
         bean.setTargetDataSources(targetDataSources);
-        bean.setDefaultTargetDataSource(dataSource1);
+        bean.setDefaultTargetDataSource(slave);
         return bean;
     }
 

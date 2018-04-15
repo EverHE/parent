@@ -92,8 +92,8 @@ spring:
 
 #mybatis
 mybatis-plus:
-  datasource: datasource
-  #mapper-locations: classpath*:/mapper/**Mapper.xml
+  #datasource: datasource
+  mapper-locations: classpath*:/mapper/**Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.he.model.entity
   typeEnumsPackage: com.he.model.enums

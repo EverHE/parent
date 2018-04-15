@@ -71,7 +71,7 @@
           <element id="archive" name="model-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="model" />
           </element>
-          <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.16.20" />
+          <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.16.10" />
           <element id="archive" name="common-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="common" />
           </element>

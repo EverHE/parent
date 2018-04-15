@@ -16,14 +16,15 @@ public class DataSourceInterceptor {
 
     //表示匹配com.he.dao.mapper.biz包及其子包下的所有方法
     @Pointcut("execution(* com.he.dao.mapper.biz..*(..))")
-    private void datasource1ServicePointcut() {
+    private void masterDbPointcut() {
     }
 
     @Pointcut("execution(* com.he.dao.mapper.sys..*(..))")
-    private void datasource2ServicePointcut() {
+    private void slaveDbPointcut() {
     }
 
-    //TODO 待修改。需要将aop切换数据源的时机改到service
+    //TODO 待修改。需要将aop切换数据源的时机改到service?????
+    //多数据源事务问题
     /**
      * 切换数据源是不能放在 dao层的, 除非你不加事物,或者把事物放在dao层.
      * 如果按照正常的把事物放在service层, 通过aop 扫描mapper层切换数据源是不会成功的 ,因为切换数据源是在事物之前执行的.
@@ -31,20 +32,20 @@ public class DataSourceInterceptor {
      */
 
     /**
-     * 切换数据源1
+     * 切换到主
      */
-    @Before("datasource1ServicePointcut()")
-    public void dataSource1Interceptor() {
-        logger.debug("切换到数据源{}..............................", "datasource1");
-        DbContextHolder.setDbType(DBTypeEnum.datasource1);
+    @Before("masterDbPointcut()")
+    public void masterInterceptor() {
+        logger.debug("切换到数据源{}..............................", "MASTER");
+        DbContextHolder.setDbType(DBTypeEnum.MASTER);
     }
 
     /**
-     * 切换数据源2
+     * 切换到从
      */
-    @Before("datasource2ServicePointcut()")
-    public void dataSource2Interceptor() {
-        logger.debug("切换到数据源{}.......................", "datasource2");
-        DbContextHolder.setDbType(DBTypeEnum.datasource2);
+    @Before("slaveDbPointcut()")
+    public void slaveInterceptor() {
+        logger.debug("切换到数据源{}.......................", "SLAVE");
+        DbContextHolder.setDbType(DBTypeEnum.SLAVE);
     }
 }
