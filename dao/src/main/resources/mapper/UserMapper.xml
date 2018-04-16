@@ -8,6 +8,6 @@
 	</sql>
 
 	<delete id="deleteAll">
-		DELETE FROM USER
+		DELETE FROM user
 	</delete>
 </mapper>

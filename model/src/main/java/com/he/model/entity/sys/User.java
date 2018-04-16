@@ -1,5 +1,6 @@
 package com.he.model.entity.sys;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.he.model.entity.SuperEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,7 @@ public class User extends SuperEntity<Long> {
 	/**
 	 * 生日
 	 */
+	@JSONField(format = "yyyyMMdd")
 	private Date birthday;
 	/**
 	 * 地址

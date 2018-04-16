@@ -1,8 +1,8 @@
-package com.he.dao.datasource.config;
+package com.he.dao.datasource.multidatasource.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
-import com.he.dao.datasource.DynamicDataSource;
+import com.he.dao.datasource.multidatasource.DynamicDataSource;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,4 +1,4 @@
-package com.he.dao.datasource.enums;
+package com.he.dao.datasource.multidatasource.enums;
 
 /**
  * 数据库枚举

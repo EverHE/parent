@@ -13,7 +13,7 @@ import java.util.List;
  * @author HL
  */
 @Repository
-public interface UserMapper extends SuperMapper<User> {
+public interface UserMapper extends SuperMapper<User,Long> {
     /**
      * 删除全部
      * @return

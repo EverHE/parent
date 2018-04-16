@@ -1,4 +1,4 @@
-package com.he.dao.datasource;
+package com.he.dao.datasource.multidatasource;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 

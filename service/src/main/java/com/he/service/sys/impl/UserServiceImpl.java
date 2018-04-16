@@ -18,4 +18,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements IUs
         userMapper.insert(user);
         return 0;
     }
+
+    @Override
+    public int relDelById(Long id) {
+        return userMapper.relDelById(id);
+    }
+
+    @Override
+    public int relDelAll() {
+        return userMapper.relDelAll();
+    }
 }

@@ -1,6 +1,6 @@
-package com.he.dao.datasource;
+package com.he.dao.datasource.multidatasource;
 
-import com.he.dao.datasource.enums.DBTypeEnum;
+import com.he.dao.datasource.multidatasource.enums.DBTypeEnum;
 
 /**
  * 用来设置或获取线程相关的数据源别名

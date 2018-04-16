@@ -28,7 +28,7 @@ public class IndexController extends SuperController {
     @ResponseBody
     public String hello() {
         JSONObject j = new JSONObject();
-        j.put("key", "value");
+        j.put("key", "value11");
         return j.toJSONString();
     }
 
@@ -36,18 +36,39 @@ public class IndexController extends SuperController {
     @ResponseBody
     public String test() {
         User u = new User();
-        u.setStatus(StatusEnum.STATUS_DELETE);
+        u.setStatus(StatusEnum.STATUS_NORMAL);
         u.setUsername("hehe");
         //.addUser(u);
         userService.insert(u);
         return "id:"+u.getId();
     }
 
+    @RequestMapping("/del")
+    @ResponseBody
+    public Object del(Long id) {
+        boolean  flag = userService.deleteById(id);
+        return flag;
+    }
+
+    @RequestMapping("/delById")
+    @ResponseBody
+    public Object delById(Long id) {
+        int  flag = userService.relDelById(id);
+        return flag;
+    }
+
+    @RequestMapping("/delAll")
+    @ResponseBody
+    public Object delAll() {
+        int  flag = userService.relDelAll();
+        return flag;
+    }
+
     @RequestMapping("/get")
     @ResponseBody
-    public String get() {
+    public Object get() {
         User user = userService.selectById(1);
-        return user.toString();
+        return user;
     }
 
     @RequestMapping("/test")

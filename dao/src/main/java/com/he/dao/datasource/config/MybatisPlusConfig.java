@@ -18,7 +18,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 
 import javax.sql.DataSource;
@@ -26,13 +25,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@MapperScan({"com.he.dao.mapper.sys*","com.he.dao.mapper.biz*"})
+@MapperScan("com.he.dao.mapper*")
+//@MapperScan({"com.he.dao.mapper.sys*","com.he.dao.mapper.biz*"})
 public class MybatisPlusConfig {
 
     /**
      * mybatis-plus SQL执行效率插件【生产环境可以关闭】
      */
-    @Bean
+    //@Bean
     public PerformanceInterceptor performanceInterceptor() {
         return new PerformanceInterceptor();
     }
@@ -99,7 +99,7 @@ public class MybatisPlusConfig {
     /**
      * 注入主键生成器
      */
-    @Bean
+    //@Bean
     public IKeyGenerator keyGenerator(){
         return new H2KeyGenerator();
     }
@@ -107,25 +107,17 @@ public class MybatisPlusConfig {
     /**
      * 注入sql注入器
      */
-    @Bean
+    //@Bean
     public ISqlInjector sqlInjector(){
         return new LogicSqlInjector();
     }
 
-
     /**
      * druid注入
      */
-    @Primary
     @Bean
     @ConfigurationProperties("spring.datasource" )
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }
-
-//    @Bean
-//    @ConfigurationProperties("spring.datasource2" )
-//    public DataSource dataSource2() {
-//        return DataSourceBuilder.create().build();
-//    }
 }
