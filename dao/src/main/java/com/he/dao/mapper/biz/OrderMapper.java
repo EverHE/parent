@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  * @author HL
  */
 @Repository
-public interface OrderMapper extends SuperMapper<Order>{
+public interface OrderMapper extends SuperMapper<Order,Long>{
 }

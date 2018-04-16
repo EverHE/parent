@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 @SpringBootApplication
 @ComponentScan("com.he")
 @EnableAutoConfiguration()
-@PropertySource(value = {"classpath:db.yml"})
+//@PropertySource(value = {"classpath:db.yml"})
 public class WebApplication  {//extends SpringBootServletInitializer
 //	@Override
 //	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

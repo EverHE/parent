@@ -15,6 +15,10 @@ public class User extends SuperEntity<Long> {
 	 */
 	private String username;
 	/**
+	 * 密码
+	 */
+	private String password;
+	/**
 	 * 性别
 	 */
 	private String sex;

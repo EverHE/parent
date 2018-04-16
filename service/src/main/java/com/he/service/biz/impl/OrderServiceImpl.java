@@ -17,4 +17,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper,Order> implements 
     public int addOrder(Order order) {
         return orderMapper.insert(order);
     }
+
+    @Override
+    public int relDelById(Long id) {
+        return orderMapper.relDelById(id);
+    }
+
+    @Override
+    public int relDelAll() {
+        return orderMapper.relDelAll();
+    }
 }
