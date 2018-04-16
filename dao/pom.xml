@@ -3,7 +3,6 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.he</groupId>
 	<artifactId>dao</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -12,17 +11,10 @@
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.1.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-
-	<!--<parent>
-		<groupId>com.ge</groupId>
+		<groupId>com.he</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>-->
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,29 +27,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatisplus-spring-boot-starter</artifactId>
-			<version>1.0.5</version>
 		</dependency>
 		<!--mybatis-plus-->
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus</artifactId>
-			<version>2.1.9</version>
 		</dependency>
 		<!-- druid  -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>1.1.9</version>
 		</dependency>
 		<!--mysql-->
 		<dependency>
@@ -70,11 +57,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
-
 		<dependency>
 			<groupId>com.he</groupId>
 			<artifactId>model</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

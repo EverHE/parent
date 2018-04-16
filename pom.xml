@@ -24,12 +24,22 @@
         <relativePath/>
     </parent>
 
-    <!-- 属性 -->
+    <!-- 统一版本控制 -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <common.version>0.0.1-SNAPSHOT</common.version>
+        <dao.version>0.0.1-SNAPSHOT</dao.version>
+        <model.version>0.0.1-SNAPSHOT</model.version>
+        <service.version>0.0.1-SNAPSHOT</service.version>
+        <web.version>0.0.1-SNAPSHOT</web.version>
         <fastjson.version>1.2.35</fastjson.version>
         <lombok.version>1.16.10</lombok.version>
+        <mybatis-plus-starter.version>1.0.5</mybatis-plus-starter.version>
+        <mybatis-plus.version>2.1.9</mybatis-plus.version>
+        <druid-starter.version>1.1.9</druid-starter.version>
+        <mysql-connector.version>5.1.46</mysql-connector.version>
+        <hutool.version>4.0.9</hutool.version>
     </properties>
 
     <!-- parent中统一模块的依赖版本 -->
@@ -39,31 +49,28 @@
             <dependency>
                 <groupId>com.he</groupId>
                 <artifactId>common</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${common.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.he</groupId>
                 <artifactId>dao</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${dao.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.he</groupId>
                 <artifactId>model</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${model.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.he</groupId>
                 <artifactId>service</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${service.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.he</groupId>
                 <artifactId>web</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${web.version}</version>
             </dependency>
-
-
-
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
@@ -73,6 +80,31 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatisplus-spring-boot-starter</artifactId>
+                <version>${mybatis-plus-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

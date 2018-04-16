@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.HashMap;
 
 
-@Configuration
-@MapperScan(value = {"com.he.dao.mapper.sys*","com.he.dao.mapper.biz*"})
+//@Configuration
+//@MapperScan(value = {"com.he.dao.mapper.sys*","com.he.dao.mapper.biz*"})
 //@MapperScan(value = {"com.zhangshuo.test1.mapper", "com.zhangshuo.test2.mapper"})
 public class DataSourceConfig {
 

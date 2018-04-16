@@ -40,7 +40,7 @@ public class IndexController extends SuperController {
         u.setUsername("hehe");
         //.addUser(u);
         userService.insert(u);
-        return "ok";
+        return "id:"+u.getId();
     }
 
     @RequestMapping("/get")
