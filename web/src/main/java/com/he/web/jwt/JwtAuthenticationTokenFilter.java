@@ -1,7 +1,9 @@
 package com.he.web.jwt;
 
+import com.he.common.util.JwtTokenUtil;
 import com.he.web.security.UserSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
+    @Value("${jwt.header}")
     private String tokenHeader;
 
+    @Value("${jwt.tokenHead}")
     private String tokenHead;
 
     @Autowired
@@ -29,9 +33,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         String authHeader = request.getHeader(this.tokenHeader);
         if (authHeader != null && authHeader.startsWith(tokenHead)) {
-            //TODO ??final的价值
+            //final修饰后只读
             final String authToken = authHeader.substring(tokenHead.length()); // The part after "Bearer "
-            String username = jwtTokenUtil.getUsernameFromToken(authToken);
+            String username = jwtTokenUtil.getAccountFromToken(authToken);
             logger.info("checking authentication " + username);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userSecurityService.loadUserByUsername(username);

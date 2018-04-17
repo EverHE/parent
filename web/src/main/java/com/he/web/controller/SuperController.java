@@ -1,6 +1,6 @@
 package com.he.web.controller;
 
-import com.he.model.entity.sys.User;
+import com.he.model.entity.sys.SysUser;
 import com.he.web.security.AuthUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +34,8 @@ public abstract class SuperController {
      * 通过Spring Security 获取用户信息
      * @return
      */
-    public User getUserInfo(){
-        User user=null;
+    public SysUser getUserInfo(){
+        SysUser user=null;
         try {
             Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (userDetails!=null){

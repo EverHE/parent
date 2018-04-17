@@ -1,7 +1,7 @@
 package com.he.web.security;
 
-import com.he.model.entity.sys.Menu;
-import com.he.model.entity.sys.User;
+import com.he.model.entity.sys.SysResource;
+import com.he.model.entity.sys.SysUser;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,14 +19,14 @@ import java.util.List;
 @Getter
 @Setter
 public class AuthUserDetails implements UserDetails,Serializable {
-    private User user;
+    private SysUser user;
     private List<String> userRoles;
-    private List<Menu> menusList;
+    private List<SysResource> resList;
 
-    public AuthUserDetails(User user,List<String> userRoles, List<Menu> menusList) {
+    public AuthUserDetails(SysUser user,List<String> userRoles, List<SysResource> resList) {
         this.user = user;
         this.userRoles = userRoles;
-        this.menusList = menusList;
+        this.resList = resList;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class AuthUserDetails implements UserDetails,Serializable {
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.getAccount();
     }
 
     @Override

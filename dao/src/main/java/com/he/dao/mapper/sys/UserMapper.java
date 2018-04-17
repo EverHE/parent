@@ -2,7 +2,7 @@ package com.he.dao.mapper.sys;
 
 import com.baomidou.mybatisplus.annotations.SqlParser;
 import com.he.dao.mapper.SuperMapper;
-import com.he.model.entity.sys.User;
+import com.he.model.entity.sys.SysUser;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * @author HL
  */
 @Repository
-public interface UserMapper extends SuperMapper<User,Long> {
+public interface UserMapper extends SuperMapper<SysUser,Long> {
     /**
      * 删除全部
      * @return
@@ -26,6 +26,6 @@ public interface UserMapper extends SuperMapper<User,Long> {
      */
     @SqlParser(filter = true)
     @Select("select id, username, birthday, sex,address from user")
-    List<User> selectListBySQL();
+    List<SysUser> selectListBySQL();
 
 }

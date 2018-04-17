@@ -2,11 +2,10 @@ package com.he.web.controller.sys;
 
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.he.model.entity.sys.User;
+import com.he.model.entity.sys.SysUser;
 import com.he.model.enums.StatusEnum;
 import com.he.service.sys.IUserService;
 import com.he.web.controller.SuperController;
-import lombok.val;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +23,11 @@ public class IndexController extends SuperController {
         return "index";
     }
 
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     @RequestMapping("/hello")
     @ResponseBody
     public String hello() {
@@ -35,9 +39,9 @@ public class IndexController extends SuperController {
     @RequestMapping("/add")
     @ResponseBody
     public String test() {
-        User u = new User();
+        SysUser u = new SysUser();
         u.setStatus(StatusEnum.STATUS_NORMAL);
-        u.setUsername("hehe");
+        u.setName("hehe");
         //.addUser(u);
         userService.insert(u);
         return "id:"+u.getId();
@@ -67,7 +71,7 @@ public class IndexController extends SuperController {
     @RequestMapping("/get")
     @ResponseBody
     public Object get() {
-        User user = userService.selectById(1);
+        SysUser user = userService.selectById(1);
         return user;
     }
 

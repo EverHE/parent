@@ -1,12 +1,13 @@
-package com.he.web.jwt;
+package com.he.common.util;
 
-import com.he.model.entity.sys.User;
+import com.he.model.entity.sys.SysUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,21 +21,21 @@ public class JwtTokenUtil implements Serializable {
     private static final String CLAIM_KEY_USERNAME = "sub";
     private static final String CLAIM_KEY_CREATED = "created";
 
-    //@Value("${jwt.secret}")
+    @Value("${jwt.secret}")
     private String secret;
 
-    //@Value("${jwt.expiration}")
+    @Value("${jwt.expiration}")
     private Long expiration;
 
-    public String getUsernameFromToken(String token) {
-        String username;
+    public String getAccountFromToken(String token) {
+        String account;
         try {
             final Claims claims = getClaimsFromToken(token);
-            username = claims.getSubject();
+            account = claims.getSubject();
         } catch (Exception e) {
-            username = null;
+            account = null;
         }
-        return username;
+        return account;
     }
 
     public Date getCreatedDateFromToken(String token) {
@@ -100,12 +101,6 @@ public class JwtTokenUtil implements Serializable {
                 .compact();
     }
 
-    public Boolean canTokenBeRefreshed(String token, Date lastPasswordReset) {
-        final Date created = getCreatedDateFromToken(token);
-        return !isCreatedBeforeLastPasswordReset(created, lastPasswordReset)
-                && !isTokenExpired(token);
-    }
-
     public String refreshToken(String token) {
         String refreshedToken;
         try {
@@ -119,12 +114,12 @@ public class JwtTokenUtil implements Serializable {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        User user = (User) userDetails;
-        final String username = getUsernameFromToken(token);
+        SysUser user = (SysUser) userDetails;
+        final String account = getAccountFromToken(token);
         final Date created = getCreatedDateFromToken(token);
 //        final Date expiration = getExpirationDateFromToken(token);
         return (
-                username.equals(user.getUsername())
+                account.equals(user.getAccount())
                         && !isTokenExpired(token)
                         && !isCreatedBeforeLastPasswordReset(created, user.getUpdateTime()));
     }

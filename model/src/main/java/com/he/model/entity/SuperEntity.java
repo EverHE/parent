@@ -41,4 +41,6 @@ public class SuperEntity<PK>{
 
     @TableLogic//逻辑删除的字段注解
     private StatusEnum status;
+
+    private Long sort;
 }

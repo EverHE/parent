@@ -1,7 +1,7 @@
 package com.he.web.security;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.he.model.entity.sys.User;
+import com.he.model.entity.sys.SysUser;
 import com.he.service.sys.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,15 +22,15 @@ public class UserSecurityService implements UserDetailsService {
 	private IUserService userService;
 
 	@Override
-	public UserDetails loadUserByUsername(String username)
+	public UserDetails loadUserByUsername(String account)
 			throws UsernameNotFoundException {
-		logger.debug("登录用户名：", username);
+		logger.debug("登录账号：", account);
 
-		User u = new User();
-		u.setUsername(username.toLowerCase());
-		User user = userService.selectOne(new EntityWrapper(u));
+		SysUser u = new SysUser();
+		u.setAccount(account.toLowerCase());
+		SysUser user = userService.selectOne(new EntityWrapper(u));
 		if (user == null) {
-			throw new UsernameNotFoundException("用户 " + username + " 不存在");
+			throw new UsernameNotFoundException("账户 " + account + " 不存在");
 		}
 		//TODO 添加角色信息
 		//TODO 添加权限信息
