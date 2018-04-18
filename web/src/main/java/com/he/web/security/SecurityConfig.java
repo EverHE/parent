@@ -3,28 +3,34 @@ package com.he.web.security;
 import com.he.web.jwt.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
-@Component
+
+@Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
-    private UserSecurityService userSecurityService;
-    //装载BCrypt密码编码器
+    private UserDetailsService userSecurityService;
+
+    @Resource
+    private JwtAuthenticationTokenFilter    tokenFilter;
+
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
@@ -90,14 +96,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 添加JWT filter
         http
                 //在UsernamePasswordAuthenticationFilter 前添加 JwtAuthenticationTokenFilter
-                .addFilterBefore(new JwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         //禁用缓存
         http.headers().cacheControl();
     }
 
     @Override
-    @Autowired
+    //@Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		//数据库校验
         auth

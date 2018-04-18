@@ -23,12 +23,10 @@ import javax.annotation.Resource;
 public class AuthServiceImpl implements IAuthService {
     @Resource
     private IUserService    userService;
-    @Resource
-    private AuthenticationManager   authenticationManager;
+//    @Resource
+//    private AuthenticationManager   authenticationManager;
     @Resource
     private UserDetailsService  userDetailsService;
-    @Resource
-    private JwtTokenUtil    jwtTokenUtil;
 
     @Value("${jwt.tokenHead}")
     private String tokenHead;
@@ -54,22 +52,22 @@ public class AuthServiceImpl implements IAuthService {
     @Override
     public String login(String account, String password) {
         UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(account, password);
-        //TODO ????
-        final Authentication authentication = authenticationManager.authenticate(upToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        //TODO ????
+//        final Authentication authentication = authenticationManager.authenticate(upToken);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(account);
-        final String token = jwtTokenUtil.generateToken(userDetails);
+        final String token = JwtTokenUtil.generateToken(userDetails);
         return token;
     }
 
     @Override
     public String refresh(String oldToken) {
         final String token = oldToken.substring(tokenHead.length());
-        String username = jwtTokenUtil.getAccountFromToken(token);
+        String username = JwtTokenUtil.getAccountFromToken(token);
         UserDetails user = userDetailsService.loadUserByUsername(username);
-        if (jwtTokenUtil.validateToken(token, user)){
-            return jwtTokenUtil.refreshToken(token);
+        if (JwtTokenUtil.validateToken(token, user)){
+            return JwtTokenUtil.refreshToken(token);
         }
         return null;
     }
