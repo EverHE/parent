@@ -30,8 +30,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Resource
     private UserDetailsService userSecurityService;
 
-    //@Autowired
-    //private JwtTokenUtil jwtTokenUtil;
+    @Resource
+    private JwtTokenUtil jwtTokenUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -39,7 +39,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith(tokenHead)) {
             //final修饰后只读
             final String authToken = authHeader.substring(tokenHead.length()); // The part after "Bearer "
-            String username = JwtTokenUtil.getAccountFromToken(authToken);
+            String username = jwtTokenUtil.getAccountFromToken(authToken);
 
             //事实上如果我们足够相信token中的数据，也就是我们足够相信签名token的secret的机制足够好，
             //这种情况下，我们可以不用再查询数据库，而直接采用token中的数据。
@@ -49,7 +49,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 //数据库再验证可以控制token泄露的情况下，将token失效(修改密码，或特定字段控制)
                 UserDetails userDetails = this.userSecurityService.loadUserByUsername(username);
-                if (JwtTokenUtil.validateToken(authToken, userDetails)) {
+                if (jwtTokenUtil.validateToken(authToken, userDetails)) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(

@@ -7,6 +7,7 @@ import com.he.model.entity.sys.SysUser;
 import com.he.model.enums.StatusEnum;
 import com.he.service.sys.IAuthService;
 import com.he.service.sys.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,13 +24,24 @@ import javax.annotation.Resource;
 public class AuthServiceImpl implements IAuthService {
     @Resource
     private IUserService    userService;
-//    @Resource
-//    private AuthenticationManager   authenticationManager;
+    @Resource
+    private AuthenticationManager   authenticationManager;
     @Resource
     private UserDetailsService  userDetailsService;
+    @Resource
+    private JwtTokenUtil jwtTokenUtil;
 
     @Value("${jwt.tokenHead}")
     private String tokenHead;
+
+//    @Autowired
+//    public AuthServiceImpl(
+//            AuthenticationManager authenticationManager,
+//            UserDetailsService userDetailsService) {
+//        this.authenticationManager = authenticationManager;
+//        this.userDetailsService = userDetailsService;
+//    }
+
 
     @Override
     public SysUser register(SysUser user) {
@@ -53,21 +65,21 @@ public class AuthServiceImpl implements IAuthService {
     public String login(String account, String password) {
         UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(account, password);
 //        //TODO ????
-//        final Authentication authentication = authenticationManager.authenticate(upToken);
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
+        final Authentication authentication = authenticationManager.authenticate(upToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(account);
-        final String token = JwtTokenUtil.generateToken(userDetails);
+        final String token = jwtTokenUtil.generateToken(userDetails);
         return token;
     }
 
     @Override
     public String refresh(String oldToken) {
         final String token = oldToken.substring(tokenHead.length());
-        String username = JwtTokenUtil.getAccountFromToken(token);
+        String username = jwtTokenUtil.getAccountFromToken(token);
         UserDetails user = userDetailsService.loadUserByUsername(username);
-        if (JwtTokenUtil.validateToken(token, user)){
-            return JwtTokenUtil.refreshToken(token);
+        if (jwtTokenUtil.validateToken(token, user)){
+            return jwtTokenUtil.refreshToken(token);
         }
         return null;
     }

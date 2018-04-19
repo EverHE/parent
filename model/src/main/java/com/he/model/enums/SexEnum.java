@@ -1,5 +1,6 @@
 package com.he.model.enums;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.enums.IEnum;
 
 import java.io.Serializable;
@@ -19,9 +20,9 @@ public enum SexEnum implements IEnum {
 
     @Override
     public Serializable getValue() {
-        return null;
+        return this.value;
     }
-
+    @JSONField
     public Serializable getDesc(){
         return this.desc;
     }

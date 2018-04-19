@@ -24,6 +24,11 @@ public class MyMetaObjectHandler extends MetaObjectHandler {
         if (createTime == null) {
             setFieldValByName("createTime", new Date(), metaObject);//mybatis-plus版本2.0.9+
         }
+        Object createUserId = getFieldValByName("createUserId", metaObject);//mybatis-plus版本2.0.9+
+        System.out.println("createUserId=" + createUserId);
+        if (createUserId == null) {
+            setFieldValByName("createUserId", 1l, metaObject);//mybatis-plus版本2.0.9+
+        }
         logger.info("新增的时候干点不可描述的事情");
     }
 

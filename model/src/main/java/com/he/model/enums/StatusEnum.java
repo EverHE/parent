@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.enums.IEnum;
 import java.io.Serializable;
 
 public enum StatusEnum implements IEnum {
-    STATUS_NORMAL(1,"正常"),
-    STATUS_DELETE(0,"删除");
+    STATUS_DELETE(0,"删除"),
+    STATUS_NORMAL(1,"正常");
 
     private int value;
     private String desc;

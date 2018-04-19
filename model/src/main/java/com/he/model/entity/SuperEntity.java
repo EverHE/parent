@@ -31,7 +31,8 @@ public class SuperEntity<PK>{
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
-
+    //公共字段自动填充字段需要此注解
+    @TableField(fill = FieldFill.INSERT)
     private PK createUserId;
 
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")

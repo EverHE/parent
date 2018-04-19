@@ -16,23 +16,21 @@ import java.util.Map;
 @Component
 public class JwtTokenUtil{
 
-    //private static final long serialVersionUID = -3301605591108950415L;
-
-    private static final String CLAIM_KEY_USERNAME = "sub";
-    private static final String CLAIM_KEY_CREATED = "created";
+    private final String CLAIM_KEY_USERNAME = "sub";
+    private final String CLAIM_KEY_CREATED = "created";
 
     @Value("${jwt.secret}")
-    private static String secret;
+    private String secret;
 
     @Value("${jwt.expiration}")
-    private static Long expiration;
+    private Long expiration;
 
     /**
      * 根据token获取account
      * @param token
      * @return
      */
-    public static String getAccountFromToken(String token) {
+    public String getAccountFromToken(String token) {
         String account;
         try {
             final Claims claims = getClaimsFromToken(token);
@@ -48,7 +46,7 @@ public class JwtTokenUtil{
      * @param token
      * @return
      */
-    public static Date getCreatedDateFromToken(String token) {
+    public Date getCreatedDateFromToken(String token) {
         Date created;
         try {
             final Claims claims = getClaimsFromToken(token);
@@ -64,7 +62,7 @@ public class JwtTokenUtil{
      * @param token
      * @return
      */
-    public static Date getExpirationDateFromToken(String token) {
+    public Date getExpirationDateFromToken(String token) {
         Date expiration;
         try {
             final Claims claims = getClaimsFromToken(token);
@@ -80,7 +78,7 @@ public class JwtTokenUtil{
      * @param token
      * @return
      */
-    public static Claims getClaimsFromToken(String token) {
+    public Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
             claims = Jwts.parser()
@@ -97,7 +95,7 @@ public class JwtTokenUtil{
      * 生成过期时间
      * @return
      */
-    public static Date generateExpirationDate() {
+    public Date generateExpirationDate() {
         return new Date(System.currentTimeMillis() + expiration * 1000);
     }
 
@@ -106,7 +104,7 @@ public class JwtTokenUtil{
      * @param token
      * @return
      */
-    public static Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
@@ -117,7 +115,7 @@ public class JwtTokenUtil{
      * @param lastPasswordReset
      * @return
      */
-    public static Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {
+    public Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {
         return (lastPasswordReset != null && created.before(lastPasswordReset));
     }
 
@@ -126,7 +124,7 @@ public class JwtTokenUtil{
      * @param userDetails
      * @return
      */
-    public static String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
         claims.put(CLAIM_KEY_CREATED, new Date());
@@ -138,7 +136,7 @@ public class JwtTokenUtil{
      * @param claims
      * @return
      */
-    public static String generateToken(Map<String, Object> claims) {
+    public String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
@@ -151,7 +149,7 @@ public class JwtTokenUtil{
      * @param token
      * @return
      */
-    public static String refreshToken(String token) {
+    public String refreshToken(String token) {
         String refreshedToken;
         try {
             final Claims claims = getClaimsFromToken(token);
@@ -169,7 +167,7 @@ public class JwtTokenUtil{
      * @param userDetails
      * @return
      */
-    public static Boolean validateToken(String token, UserDetails userDetails) {
+    public Boolean validateToken(String token, UserDetails userDetails) {
         SysUser user = (SysUser) userDetails;
         final String account = getAccountFromToken(token);
         final Date created = getCreatedDateFromToken(token);

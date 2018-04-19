@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,7 +19,7 @@ public class AuthController {
     private IAuthService authService;
 
     @RequestMapping(value = "${jwt.route.authentication.path}", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(String account,String password) throws AuthenticationException {
+    public ResponseEntity<?> createAuthenticationToken(@RequestParam(value = "account", required = false) String account, @RequestParam(value = "password", required = false) String password) throws AuthenticationException {
         final String token = authService.login(account, password);
 
         // Return the token

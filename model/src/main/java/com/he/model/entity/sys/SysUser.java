@@ -1,6 +1,7 @@
 package com.he.model.entity.sys;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotations.TableName;
 import com.he.model.entity.SuperEntity;
 import com.he.model.enums.SexEnum;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import java.util.Date;
 
 @Getter
 @Setter
+@TableName(value = "sys_user")
 public class SysUser extends SuperEntity<Long> {
 	/**
 	 * 用户账号
@@ -22,12 +24,13 @@ public class SysUser extends SuperEntity<Long> {
 	/**
 	 * 密码
 	 */
+	//TODO ?? 无效
 	@JSONField(serialize = false)
 	private String password;
 	/**
 	 * 性别
 	 */
-	private SexEnum sex;
+	private SexEnum sex = SexEnum.SEX_UNKNOWN;
 	/**
 	 * 手机
 	 */

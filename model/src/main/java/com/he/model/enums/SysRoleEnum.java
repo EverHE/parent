@@ -18,7 +18,7 @@ public enum SysRoleEnum implements IEnum {
 
     @Override
     public Serializable getValue() {
-        return null;
+        return this.value;
     }
 
     public Serializable getDesc(){

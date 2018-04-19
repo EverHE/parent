@@ -6,6 +6,8 @@ import com.he.model.entity.sys.SysUser;
 import com.he.model.enums.StatusEnum;
 import com.he.service.sys.IUserService;
 import com.he.web.controller.SuperController;
+import com.he.web.security.AuthUserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,9 +20,17 @@ public class IndexController extends SuperController {
     @Resource
     private IUserService userService;
 
-    @RequestMapping("/")
-    public String index() {
-        return "index";
+    @RequestMapping(value = {"/","/login"})
+    public String helloGs() {
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (userDetails!=null){
+            if (userDetails instanceof AuthUserDetails) {
+                String username = ((AuthUserDetails)userDetails).getUsername();
+            } else {
+                String username = userDetails.toString();
+            }
+        }
+        return "/login";
     }
 
     @RequestMapping("/login")
