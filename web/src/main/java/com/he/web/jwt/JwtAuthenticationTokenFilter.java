@@ -47,6 +47,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             //但简单验证的话，你可以采用直接验证token是否合法来避免昂贵的数据查询。
             logger.info("checking authentication " + username);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                //数据库再验证可以控制token泄露的情况下，将token失效(修改密码，或特定字段控制)
                 UserDetails userDetails = this.userSecurityService.loadUserByUsername(username);
                 if (JwtTokenUtil.validateToken(authToken, userDetails)) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
