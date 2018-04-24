@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author nickChen
  * @date 2017/12/08
  */
-public class DefaultAccessTokenCache implements IAccessTokenCache {
+public class DefaultAccessTokenCache implements ICache {
 
     private Map<String, String> map = new ConcurrentHashMap<String, String>();
 
