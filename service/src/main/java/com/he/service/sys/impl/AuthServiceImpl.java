@@ -34,15 +34,6 @@ public class AuthServiceImpl implements IAuthService {
     @Value("${jwt.tokenHead}")
     private String tokenHead;
 
-//    @Autowired
-//    public AuthServiceImpl(
-//            AuthenticationManager authenticationManager,
-//            UserDetailsService userDetailsService) {
-//        this.authenticationManager = authenticationManager;
-//        this.userDetailsService = userDetailsService;
-//    }
-
-
     @Override
     public SysUser register(SysUser user) {
         //final修饰后只读
