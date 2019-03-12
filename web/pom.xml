@@ -65,19 +65,26 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!--jersey-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jersey</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>com.he</groupId>
 			<artifactId>service</artifactId>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>com.he</groupId>
 			<artifactId>common</artifactId>
+		</dependency>-->
+
+		<!--kryo-->
+		<dependency>
+			<groupId>com.esotericsoftware</groupId>
+			<artifactId>kryo</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>de.javakaffee</groupId>
+			<artifactId>kryo-serializers</artifactId>
+		</dependency>
+
 		<!--fastjson-->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -89,10 +96,10 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		<!--spring-security-->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		</dependency>-->
 		<!--jwt-->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
