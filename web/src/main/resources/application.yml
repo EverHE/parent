@@ -24,7 +24,7 @@ spring:
     #配置一个连接在池中最小生存的时间，单位是毫秒
     min-evictable-idle-time-millis: 300000
 
-    filters: wall
+    filters: wall,stat
     filter:
       stat:
         enabled: true
@@ -86,7 +86,7 @@ spring:
       url-pattern: /druid/*
       #允许清除记录
       reset-enable: false
-    aop-patterns: com.tdx.account_service.service.*
+    aop-patterns: com.he.*
 
 
 #mybatis
@@ -118,8 +118,9 @@ mybatis-plus:
     #自定义填充策略接口实现
     #meta-object-handler: MyMetaObjectHandler
   configuration:
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
     #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
-    #map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: false
     cache-enabled: false
     #配置JdbcTypeForNull, oracle数据库必须配置
     jdbc-type-for-null: 'null'

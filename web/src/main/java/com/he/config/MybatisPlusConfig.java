@@ -1,6 +1,7 @@
 package com.he.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.he.datasource.handler.MyMetaObjectHandler;
 import org.mybatis.spring.annotation.MapperScan;
@@ -23,6 +24,15 @@ public class MybatisPlusConfig {
 //    public PerformanceInterceptor performanceInterceptor() {
 //        return new PerformanceInterceptor();
 //    }
+
+    /**
+     * 乐观锁插件，需要实体对象有@version
+     * @return
+     */
+    @Bean
+    public OptimisticLockerInterceptor OptimisticLockerInterceptor(){
+        return new OptimisticLockerInterceptor();
+    }
 
     /**
      * mybatis-plus分页插件<br>

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.Version;
 import com.he.enums.StatusEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,7 @@ public class BaseEntity<PK>{
      * 如果version不对，就更新失败
      */
     @JSONField(serialize = false)
+    @Version
     private Integer versn;
 
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
