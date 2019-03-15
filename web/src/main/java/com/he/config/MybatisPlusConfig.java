@@ -109,12 +109,12 @@ public class MybatisPlusConfig {
 //        return new LogicSqlInjector();
 //    }
 
-    /**
-     * druid注入
-     */
-    @Bean
-    @ConfigurationProperties("spring.datasource" )
-    public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
-    }
+//    /**
+//     * druid注入
+//     */
+//    @Bean
+//    @ConfigurationProperties("spring.datasource" )
+//    public DataSource dataSource() {
+//        return DataSourceBuilder.create().build();
+//    }
 }

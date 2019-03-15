@@ -21,95 +21,171 @@ spring:
         max-idle: 8
         min-idle: 0
 
-
-
   datasource:
+    # jdbc配置
     driver-class-name: com.mysql.jdbc.Driver
-    #基本属性 url、username、password
+    url: jdbc:mysql://120.55.54.42:3306/test?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: 1qaz@WSX
-    jdbc-url: jdbc:mysql://120.55.54.42:3306/test?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&useSSL=false
-    #配置初始化大小、最小、最大
-    initial-size: 1
-    max-active: 20
-    min-idle: 1
-    #配置获取连接等待超时的时间
-    max-wait: 60000
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 连接池的设置
+      # 初始化时建立物理连接的个数
+      initial-size: 5
+      # 最小连接池数量
+      min-idle: 5
+      # 最大连接池数量 maxIdle已经不再使用
+      max-active: 20
+      # 获取连接时最大等待时间，单位毫秒
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      # 申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+      test-while-idle: true
+      # 申请连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-borrow: false
+      # 归还连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-return: false
+      # 当数据库抛出不可恢复的异常时,抛弃该连接
+      #exception-sorter: true
+      # 是否缓存preparedStatement,mysql5.5+建议开启
+      pool-prepared-statements: true
+      # 当值大于0时poolPreparedStatements会自动修改为true
+      max-pool-prepared-statement-per-connection-size: 20
+      use-global-data-source-stat: true
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
-    validation-query: select 'x'
-    validationQueryTimeout: 5
-    test-on-borrow: false
-    test-on-return: false
-    test-while-idle: true
+      aop-patterns: com.he.*
 
-    #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-    time-between-eviction-runs-millis: 60000
-    #配置一个连接在池中最小生存的时间，单位是毫秒
-    min-evictable-idle-time-millis: 300000
 
-    filters: wall,stat
-    filter:
-      stat:
+      # 是否启用StatViewServlet（监控页面）默认值为false（考虑到安全问题默认并未启动，如需启用建议设置密码或白名单以保障安全）
+      stat-view-servlet:
         enabled: true
-        log-slow-sql: true
-        slow-sql-millis: 1000
-        merge-sql: true
-        #db-type: sqlserver
-      slf4j:
+        login-username: admin
+        login-password: 123456
+        # 是否允许清除记录
+        reset-enable: false
+        url-pattern: /druid/*
+      # 添加IP白名单
+      #allow:
+      # 添加IP黑名单，当白名单和黑名单重复时，黑名单优先级更高
+      #deny:
+
+      # WebStatFilter配置
+      web-stat-filter:
         enabled: true
-        connection-log-enabled: true
-        connection-close-after-log-enabled: true
-        connection-commit-after-log-enabled: true
-        connection-connect-after-log-enabled: true
-        connection-connect-before-log-enabled: true
-        connection-log-error-enabled: true
-        data-source-log-enabled: true
-        result-set-log-enabled: true
-        statement-log-enabled: true
-      wall:
-        enabled: true
-        config:
-          alter-table-allow: false
-          truncate-allow: false
-          drop-table-allow: false
-          #是否允许非以上基本语句的其他语句，缺省关闭，通过这个选项就能够屏蔽DDL
-          none-base-statement-allow: false
-          #检查UPDATE语句是否无where条件，这是有风险的，但不是SQL注入类型的风险
-          update-where-none-check: true
-          #SELECT ... INTO OUTFILE 是否允许，这个是mysql注入攻击的常见手段，缺省是禁止的
-          select-into-outfile-allow: false
-          #是否允许调用Connection.getMetadata方法，这个方法调用会暴露数据库的表信息
-          metadata-allow: true
-          #允许多条sql一起执行
-          multiStatementAllow: true
-        #对被认为是攻击的SQL进行LOG.error输出
-        log-violation: true
-        #对被认为是攻击的SQL抛出SQLExcepton
-        throw-exception: true
-        #db-type: mysql
-    web-stat-filter:
-      enabled: true
-      url-pattern: /*
-      exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
-      #你可以配置principalSessionName，使得druid能够知道当前的cookie的用户是谁
-      #principal-cookie-name: admin
-      #你可以配置principalSessionName，使得druid能够知道当前的session的用户是谁
-      #principal-session-name: admin
-      #设置profileEnable能够监控单个url调用的sql列表。
-      profile-enable: true
-      #session统计功能
-      session-stat-enable: false
-      #最大session数
-      session-stat-max-count: 100000
-    stat-view-servlet:
-      #allow: ${GATEWAY_HOST:172.26.114.241}
-      enabled: true
-      login-username: ${DRUID_USER:admin}
-      login-password: ${DRUID_PWD:admin}
-      url-pattern: /druid/*
-      #允许清除记录
-      reset-enable: false
-    aop-patterns: com.he.*
+        # 添加过滤规则
+        url-pattern: /*
+        # 忽略过滤格式
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+        # session统计功能
+        session-stat-enable: true
+        # 最大session数 默认1000
+        session-stat-max-count: 1000
+        # 配置principalSessionName，使得druid能够知道当前的session的用户是谁
+        # XXXX修改为你user信息保存在session中的sessionName
+        # 如果session中保存的是非string类型的对象，需要重载toString方法。
+        #principal-session-name: XXXX
+        # 配置principalCookieName，使得druid知道当前的user是谁
+        # XXXX修改为你user信息保存在cookie中的cookieName
+        #principal-cookie-name: XXXX
+        #配置profileEnable能够监控单个url调用的sql列表
+        profile-enable: true
+
+      #配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j
+      filter:
+        stat:
+          enabled: true
+          # 批量(重复)sql合并
+          merge-sql: true
+          # SQL慢查询
+          log-slow-sql: true
+          # 慢查询标准，默认3000，单位毫秒
+          slow-sql-millis: 3000
+        wall:
+          enabled: true
+          # 刚开始引入WallFilter的时候，把logViolation设置为true，而throwException设置为false。就可以观察是否存在违规的情况，同时不影响业务运行。
+          # 对被认为是攻击的SQL抛出SQLException，默认true
+          throw-exception: true
+          # 对被认为是攻击的SQL进行LOG.error输出，默认false
+          log-violation: false
+          config:
+            #如果把selectIntoAllow、deleteAllow、updateAllow、insertAllow、mergeAllow都设置为false，这就是一个只读数据源了
+            selelctAllow: true	#默认true, 是否允许执行SELECT语句
+            selectAllColumnAllow: true	#默认true, 是否允许执行SELECT * FROM T这样的语句。如果设置为false，不允许执行select * from t，但select * from (select id, name from t) a。这个选项是防御程序通过调用select *获得数据表的结构信息。
+            selectIntoAllow: true	#默认true, SELECT查询中是否允许INTO字句
+            deleteAllow: true	#默认true, 是否允许执行DELETE语句
+            updateAllow: true	#默认true, 是否允许执行UPDATE语句
+            insertAllow: true	#默认true, 是否允许执行INSERT语句
+            replaceAllow: true	#默认true, 是否允许执行REPLACE语句
+            mergeAllow: true	#默认true, 是否允许执行MERGE语句，这个只在Oracle中有用
+            callAllow: true	#默认true, 是否允许通过jdbc的call语法调用存储过程
+            setAllow: true	#默认true, 是否允许使用SET语法
+            truncateAllow: true	#默认true, truncate语句是危险，缺省打开，若需要自行关闭
+            createTableAllow: true	#默认true, 是否允许创建表
+            alterTableAllow: true	#默认true, 是否允许执行Alter Table语句
+            dropTableAllow: true	#默认true, 是否允许修改表
+            commentAllow: false	#默认false, 是否允许语句中存在注释，Oracle的用户不用担心，Wall能够识别hints和注释的区别
+            noneBaseStatementAllow: false	#默认false, 是否允许非以上基本语句的其他语句，缺省关闭，通过这个选项就能够屏蔽DDL。
+            multiStatementAllow: false	#默认false, 是否允许一次执行多条语句，缺省关闭
+            useAllow: true	#默认true, 是否允许执行mysql的use语句，缺省打开
+            describeAllow: true	#默认true, 是否允许执行mysql的describe语句，缺省打开
+            showAllow: true	#默认true, 是否允许执行mysql的show语句，缺省打开
+            commitAllow: true	#默认true, 是否允许执行commit操作
+            rollbackAllow: true	#默认true, 是否允许执行roll back操作
+
+            ## 拦截配置－永真条件
+            selectWhereAlwayTrueCheck: true	#默认true, 检查SELECT语句的WHERE子句是否是一个永真条件
+            selectHavingAlwayTrueCheck: true	#默认true, 检查SELECT语句的HAVING子句是否是一个永真条件
+            deleteWhereAlwayTrueCheck: true	#默认true, 检查DELETE语句的WHERE子句是否是一个永真条件
+            deleteWhereNoneCheck: false	#默认false, 检查DELETE语句是否无where条件，这是有风险的，但不是SQL注入类型的风险
+            updateWhereAlayTrueCheck: true	#默认true, 检查UPDATE语句的WHERE子句是否是一个永真条件
+            updateWhereNoneCheck: false	#默认false, 检查UPDATE语句是否无where条件，这是有风险的，但不是SQL注入类型的风险
+            conditionAndAlwayTrueAllow: false	#默认false, 检查查询条件(WHERE/HAVING子句)中是否包含AND永真条件
+            conditionAndAlwayFalseAllow: false	#默认false, 检查查询条件(WHERE/HAVING子句)中是否包含AND永假条件
+            conditionLikeTrueAllow: true	#默认true, 检查查询条件(WHERE/HAVING子句)中是否包含LIKE永真条件
+
+            selectIntoOutfileAllow: false	#默认false, SELECT ... INTO OUTFILE 是否允许，这个是mysql注入攻击的常见手段，缺省是禁止的
+            selectUnionCheck: true	#默认true, 检测SELECT UNION
+            selectMinusCheck: true	#默认true, 检测SELECT MINUS
+            selectExceptCheck: true	#默认true, 检测SELECT EXCEPT
+            selectIntersectCheck: true	#默认true, 检测SELECT INTERSECT
+            mustParameterized: false	#默认false, 是否必须参数化，如果为True，则不允许类似WHERE ID = 1这种不参数化的SQL
+            strictSyntaxCheck: true	#默认true, 是否进行严格的语法检测，Druid SQL Parser在某些场景不能覆盖所有的SQL语法，出现解析SQL出错，可以临时把这个选项设置为false，同时把SQL反馈给Druid的开发者。
+            conditionOpXorAllow: false	#默认false, 查询条件中是否允许有XOR条件。XOR不常用，很难判断永真或者永假，缺省不允许。
+            conditionOpBitwseAllow: true	#默认true, 查询条件中是否允许有"&"、"~"、"|"、"^"运算符。
+            conditionDoubleConstAllow: false	#默认false, 查询条件中是否允许连续两个常量运算表达式
+            minusAllow: true	#默认true, 是否允许SELECT * FROM A MINUS SELECT * FROM B这样的语句
+            intersectAllow: true	#默认true, 是否允许SELECT * FROM A INTERSECT SELECT * FROM B这样的语句
+            constArithmeticAllow: true	#默认true, 拦截常量运算的条件，比如说WHERE FID = 3 - 1，其中"3 - 1"是常量运算表达式。
+            limitZeroAllow: false	#默认false, 是否允许limit 0这样的语句
+            selectLimit: -1	    #默认-1, 配置最大返回行数，如果select语句没有指定最大返回行数，会自动修改selct添加返回限制
+
+            tableCheck: true	#默认true, 检测是否使用了禁用的表
+            schemaCheck: true	#默认true, 检测是否使用了禁用的Schema
+            functionCheck: true	#默认true, 检测是否使用了禁用的函数
+            objectCheck: true	#默认true, 检测是否使用了“禁用对对象”
+            variantCheck: true	#默认true, 检测是否使用了“禁用的变量”
+            #readOnlyTables: 	    #默认空, 指定的表只读，不能够在SELECT INTO、DELETE、UPDATE、INSERT、MERGE中作为"被修改表"出现
+
+            metadataAllow: true	#默认true, 是否允许调用Connection.getMetadata方法，这个方法调用会暴露数据库的表信息
+            wrapAllow: true	#默认true, 是否允许调用Connection/Statement/ResultSet的isWrapFor和unwrap方法，这两个方法调用，使得有办法拿到原生驱动的对象，绕过WallFilter的检测直接执行SQL。
+        slf4j:
+          enabled: true
+          connection-log-enabled: true
+          connection-close-after-log-enabled: true
+          connection-commit-after-log-enabled: true
+          connection-connect-after-log-enabled: true
+          connection-connect-before-log-enabled: true
+          connection-log-error-enabled: true
+          data-source-log-enabled: true
+          result-set-log-enabled: true
+          statement-log-enabled: true
 
 
 #mybatis-plus
