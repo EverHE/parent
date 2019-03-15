@@ -1,5 +1,28 @@
-#DATABASE
 spring:
+  #redis配置
+  redis:
+    #数据库索引
+    database: 0
+    #ip
+    host: 120.55.54.42
+    #端口
+    port: 6379
+    #密码
+    password: qwe12934ynbcskbih8Bxfty56nbr
+    #超时时间（毫秒）
+    timeout: 0
+    jedis:
+      pool:
+        #最大连接数（负值表示没有限制）
+        max-active: 8
+        #最大阻塞等待时间（负值表示没有限制）
+        max-wait: -1
+        #最大空闲链接
+        max-idle: 8
+        min-idle: 0
+
+
+
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     #基本属性 url、username、password
@@ -24,7 +47,7 @@ spring:
     #配置一个连接在池中最小生存的时间，单位是毫秒
     min-evictable-idle-time-millis: 300000
 
-    filters: wall
+    filters: wall,stat
     filter:
       stat:
         enabled: true
@@ -86,43 +109,44 @@ spring:
       url-pattern: /druid/*
       #允许清除记录
       reset-enable: false
-    aop-patterns: com.tdx.account_service.service.*
+    aop-patterns: com.he.*
 
 
-#mybatis
+#mybatis-plus
 mybatis-plus:
   #datasource: datasource
   mapper-locations: classpath*:/mapper/**Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.he.entity
+  #该配置请和 typeAliasesPackage 一起使用，如果配置了该属性，则仅仅会扫描路径下以该类作为父类的域对象 。
+  type-aliases-super-type: com.he.entity.BaseEntity
+  #枚举类扫描路径，如果配置了该属性，会将路径下的枚举类进行注入，让实体类字段能够简单快捷的使用枚举属性。
   typeEnumsPackage: com.he.enums
+  #typeHandlersPackage:
+  #指定外部化 MyBatis Properties 配置，通过该配置可以抽离配置，实现不同环境的配置部署。
+  #configuration-properties: classpath:mybatis/config.properties
   global-config:
-    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-    id-type: 2
-    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-    field-strategy: 2
-    #驼峰下划线转换
-    #db-column-underline: true
-    #刷新mapper 调试神器
-    refresh-mapper: true
-    #数据库大写下划线转换
-    #capital-mode: true
-    #序列接口实现类配置
-    #key-generator: com.baomidou.springboot.xxx
-    #逻辑删除配置（下面3个配置）
-    logic-delete-value: 0
-    logic-not-delete-value: 1
-    #sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
-    #自定义SQL注入器
-    #sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
-    #自定义填充策略接口实现
-    #meta-object-handler: MyMetaObjectHandler
+    db-config:
+      #主键类型
+      id-type: id_worker
+      #字段策略
+      field-strategy: not_null
+      #是否开启大写命名，默认不开启
+      #capital-mode: true
+      #逻辑删除配置（下面3个配置）
+      logic-delete-value: 0
+      logic-not-delete-value: 1
   configuration:
-    #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
-    #map-underscore-to-camel-case: true
+    #默认枚举处理类,如果配置了该属性,枚举将统一使用指定处理器进行处理
+    #org.apache.ibatis.type.EnumTypeHandler: 存储枚举的名称
+    #org.apache.ibatis.type.EnumOrdinalTypeHandler: 存储枚举的索引
+    #com.baomidou.mybatisplus.extension.handlers.EnumTypeHandler: 枚举类需要实现IEnum接口或字段标记@EnumValue注解.
+    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.EnumTypeHandler
+    #是否开启自动驼峰命名规则映射，即从经典数据库列名A_COLUMN（下划线命名）到经典Java属性名aColumn（驼峰命名）的类似映射。
+    #默认true
+    map-underscore-to-camel-case: false
+    #全局地开启或关闭配置文件中的所有映射器已经配置的任何缓存，默认为 true。
     cache-enabled: false
-    #配置JdbcTypeForNull, oracle数据库必须配置
-    jdbc-type-for-null: 'null'
 
 
 # JWT
@@ -142,27 +166,3 @@ logging:
     org.springframework:
       data: DEBUG
       security: DEBUG
-
-
-#redis配置
-  redis:
-#  数据库索引
-    database: 0
-#    服务器地址
-    host: 120.55.54.42
-#    服务器连接端口
-    port: 6379
-#    链接密码
-    password: qwe12934ynbcskbih8Bxfty56nbr
-#    链接池
-    pool:
-#    最大连接数（负值表示没有限制）
-      max-active: 8
-#      最大阻塞等待时间（负值表示没有限制）
-      max-wait: 1
-#      最大空闲链接
-      max-idle: 8
-#      最小空闲链接
-      min-idle: 0
-#    链接超时时间（毫秒）
-    timeout: 0

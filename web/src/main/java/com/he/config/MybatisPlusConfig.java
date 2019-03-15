@@ -26,11 +26,11 @@ public class MybatisPlusConfig {
 //    }
 
     /**
-     * 乐观锁插件，需要表字段上有version
+     * 乐观锁插件，需要实体对象有@version
      * @return
      */
     @Bean
-    public OptimisticLockerInterceptor optimisticLockerInterceptor(){
+    public OptimisticLockerInterceptor OptimisticLockerInterceptor(){
         return new OptimisticLockerInterceptor();
     }
 
