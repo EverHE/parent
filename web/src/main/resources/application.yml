@@ -229,13 +229,9 @@ mybatis-plus:
 jwt:
   header: Authorization
   secret: mySecret
-  expiration: 604800
+  #过期时间（毫秒）
+  expiration: 604800000
   tokenHead: "Bearer "
-  route:
-    authentication:
-      path: auth
-      refresh: refresh
-      register: "auth/register"
 
 logging:
   level:

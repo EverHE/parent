@@ -4,10 +4,13 @@ import com.he.base.impl.SuperServiceImpl;
 import com.he.mapper.sys.UserMapper;
 import com.he.entity.sys.SysUser;
 import com.he.sys.IUserService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl extends SuperServiceImpl<UserMapper,SysUser> implements IUserService {
+public class UserServiceImpl extends SuperServiceImpl<UserMapper,SysUser> implements IUserService, UserDetailsService {
 
     @Override
     public int addUser(SysUser user) {
@@ -21,4 +24,8 @@ public class UserServiceImpl extends SuperServiceImpl<UserMapper,SysUser> implem
         return 0;
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return null;
+    }
 }

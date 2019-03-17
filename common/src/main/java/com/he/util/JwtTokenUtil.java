@@ -1,33 +1,46 @@
 package com.he.util;
 
+import cn.hutool.core.date.DateUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
 public class JwtTokenUtil {
+    private static String CLAIM_KEY_USERNAME="username";
 
-    private final String CLAIM_KEY_USERNAME = "sub";
-    private final String CLAIM_KEY_CREATED = "created";
+    @Value("${jwt.secret}")
+    private static String secret;
 
-    //@Value("${jwt.secret}")
-    private String secret;
+    @Value("${jwt.expiration}")
+    private static Integer expiration;
 
-    //@Value("${jwt.expiration}")
-    private Long expiration;
+    @Value("${jwt.header}")
+    public static String tokenHeader;
+
+    @Value("${jwt.tokenHead}")
+    public static String tokenHead;
+
+    @Value("${jwt.route.authentication.auth}")
+    public static String auth;
+
+    @Value("${jwt.tokenHead}")
+    public static String reflash;
+
+    public static String register;
 
     /**
      * 根据token获取account
      * @param token
      * @return
      */
-    public String getAccountFromToken(String token) {
+    public static String getAccountFromToken(String token) {
         String account;
         try {
             final Claims claims = getClaimsFromToken(token);
@@ -43,11 +56,12 @@ public class JwtTokenUtil {
      * @param token
      * @return
      */
-    public Date getCreatedDateFromToken(String token) {
+    public static Date getCreatedDateFromToken(String token) {
         Date created;
         try {
             final Claims claims = getClaimsFromToken(token);
-            created = new Date((Long) claims.get(CLAIM_KEY_CREATED));
+
+            created = DateUtil.offsetMillisecond(claims.getExpiration(),-expiration);
         } catch (Exception e) {
             created = null;
         }
@@ -59,7 +73,7 @@ public class JwtTokenUtil {
      * @param token
      * @return
      */
-    public Date getExpirationDateFromToken(String token) {
+    public static Date getExpirationDateFromToken(String token) {
         Date expiration;
         try {
             final Claims claims = getClaimsFromToken(token);
@@ -75,7 +89,7 @@ public class JwtTokenUtil {
      * @param token
      * @return
      */
-    public Claims getClaimsFromToken(String token) {
+    public static Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
             claims = Jwts.parser()
@@ -92,8 +106,8 @@ public class JwtTokenUtil {
      * 生成过期时间
      * @return
      */
-    public Date generateExpirationDate() {
-        return new Date(System.currentTimeMillis() + expiration * 1000);
+    public static Date generateExpirationDate() {
+        return DateUtil.offsetMillisecond(DateUtil.date(),expiration);
     }
 
     /**
@@ -101,7 +115,7 @@ public class JwtTokenUtil {
      * @param token
      * @return
      */
-    public Boolean isTokenExpired(String token) {
+    public static Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
@@ -112,28 +126,27 @@ public class JwtTokenUtil {
      * @param lastPasswordReset
      * @return
      */
-    public Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {
+    public static Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {
         return (lastPasswordReset != null && created.before(lastPasswordReset));
     }
 
-//    /**
-//     * 生成token
-//     * @param userDetails
-//     * @return
-//     */
-//    public String generateToken(UserDetails userDetails) {
-//        Map<String, Object> claims = new HashMap<>();
-//        claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
-//        claims.put(CLAIM_KEY_CREATED, new Date());
-//        return generateToken(claims);
-//    }
+    /**
+     * 生成token
+     * @param userDetails
+     * @return
+     */
+    public static String generateToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
+        return generateToken(claims);
+    }
 
     /**
      * 生成token
      * @param claims
      * @return
      */
-    public String generateToken(Map<String, Object> claims) {
+    public static String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
@@ -146,11 +159,10 @@ public class JwtTokenUtil {
      * @param token
      * @return
      */
-    public String refreshToken(String token) {
+    public static String refreshToken(String token) {
         String refreshedToken;
         try {
             final Claims claims = getClaimsFromToken(token);
-            claims.put(CLAIM_KEY_CREATED, new Date());
             refreshedToken = generateToken(claims);
         } catch (Exception e) {
             refreshedToken = null;
@@ -158,13 +170,14 @@ public class JwtTokenUtil {
         return refreshedToken;
     }
 
-//    /**
-//     * 验证token
-//     * @param token
-//     * @param userDetails
-//     * @return
-//     */
-//    public Boolean validateToken(String token, UserDetails userDetails) {
+    /**
+     * 验证token
+     * @param token
+     * @param userDetails
+     * @return
+     */
+    public Boolean validateToken(String token, UserDetails userDetails) {
+        return false;
 //        SysUser user = (SysUser) userDetails;
 //        final String account = getAccountFromToken(token);
 //        final Date created = getCreatedDateFromToken(token);
@@ -173,5 +186,5 @@ public class JwtTokenUtil {
 //                account.equals(user.getAccount())
 //                        && !isTokenExpired(token)
 //                        && !isCreatedBeforeLastPasswordReset(created, user.getUpdateTime()));
-//    }
+    }
 }

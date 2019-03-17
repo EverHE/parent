@@ -45,6 +45,7 @@
         <hutool.version>4.0.9</hutool.version>
         <jjwt.version>0.9.0</jjwt.version>
         <shiro.version>1.4.0</shiro.version>
+        <swagger2.version>2.9.2</swagger2.version>
     </properties>
 
     <!-- parent中统一模块的依赖版本 -->
@@ -129,6 +130,18 @@
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-spring</artifactId>
                 <version>${shiro.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

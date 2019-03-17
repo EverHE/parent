@@ -6,11 +6,16 @@ import com.he.entity.BaseEntity;
 import com.he.enums.SexEnum;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Date;
 
 @Getter
 @Setter
 @TableName("sys_user")
-public class SysUser extends BaseEntity<Long> {
+public class SysUser extends BaseEntity<Long> implements UserDetails {
 	/**
 	 * 用户账号
 	 */
@@ -40,14 +45,14 @@ public class SysUser extends BaseEntity<Long> {
 	 * 手机
 	 */
 	private Integer phone;
-//	/**
-//	 * 邮箱
-//	 */
-//	private String email;
-//	/**
-//	 * 修改密码时间
-//	 */
-//	private Date modPwdTime;
+	/**
+	 * 邮箱
+	 */
+	private String email;
+	/**
+	 * 修改密码时间
+	 */
+	private Date modPwdTime;
 	/**
 	 * 备注
 	 */
@@ -56,4 +61,34 @@ public class SysUser extends BaseEntity<Long> {
 	 * 区域id
 	 */
 	private String areaId;
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		return null;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return false;
+	}
 }
