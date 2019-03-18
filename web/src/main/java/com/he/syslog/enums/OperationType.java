@@ -1,8 +1,16 @@
 package com.he.syslog.enums;
 
 public enum OperationType implements EnumBase<Integer> {
-    GET(1, "查看"), ADD(100, "添加"), UPDATE(101, "修改"), SAVE(102, "保存"), DELETE(103, "删除"), IMPORT(104, "导入"),
-    EXPORT(2, "导出"), PRINT(3, "打印"), LOGIN(110, "登录"), LOGOUT(111, "登出");
+    GET(1, "查看"),
+    ADD(100, "添加"),
+    UPDATE(101, "修改"),
+    SAVE(102, "保存"),
+    DELETE(103, "删除"),
+    IMPORT(104, "导入"),
+    EXPORT(2, "导出"),
+    PRINT(3, "打印"),
+    LOGIN(110, "登录"),
+    LOGOUT(111, "登出");
 
     private int code;
     private String message;

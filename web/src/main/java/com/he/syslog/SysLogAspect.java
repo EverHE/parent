@@ -3,14 +3,17 @@ package com.he.syslog;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import com.alibaba.fastjson.JSON;
+import com.he.aop.SuperAspect;
 import com.he.syslog.enums.LogLevel;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import java.lang.reflect.Method;
 
-public class SysLogAspect extends RcAspect {
+@Slf4j
+public class SysLogAspect extends SuperAspect {
 
     /**
      * 保存系统操作日志

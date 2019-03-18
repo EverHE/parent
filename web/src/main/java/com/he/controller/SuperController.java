@@ -1,6 +1,7 @@
 package com.he.controller;
 
 import cn.hutool.core.date.DatePattern;
+import com.he.syslog.AppVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -45,7 +46,12 @@ public abstract class SuperController {
      * 获取登录用户信息
      * @return AuthUserDetails
      */
-//    public AuthUserDetails getAuthUser(){
-//        return SecurityUtils.getSubject() != null && SecurityUtils.getSubject().getPrincipal() != null ? (AuthUserDetails)SecurityUtils.getSubject().getPrincipal() : null;
-//    }
+    public AppVisitor getAuthUser(){
+        return null;
+        //return SecurityUtils.getSubject() != null && SecurityUtils.getSubject().getPrincipal() != null ? (AuthUserDetails)SecurityUtils.getSubject().getPrincipal() : null;
+    }
+
+    public AppVisitor getAuthUser(String sessionId){
+        return null;
+    }
 }

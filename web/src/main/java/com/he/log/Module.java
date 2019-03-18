@@ -1,4 +1,4 @@
-package com.he.syslog.annotation;
+package com.he.log;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -17,10 +17,5 @@ public @interface Module {
      * 
      * @return
      */
-    public String name();
-
-    /**
-     * 是否不记录日志，默认false
-     */
-    //public boolean ignoreLog() default false;
+    String name();
 }
