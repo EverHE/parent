@@ -42,7 +42,7 @@
         <mybatis-plus.version>3.1.0</mybatis-plus.version>
         <druid-starter.version>1.1.10</druid-starter.version>
         <mysql-connector.version>5.1.46</mysql-connector.version>
-        <hutool.version>4.0.9</hutool.version>
+        <hutool.version>4.1.12</hutool.version>
         <jjwt.version>0.9.0</jjwt.version>
         <shiro.version>1.7.0</shiro.version>
         <swagger2.version>2.9.2</swagger2.version>
